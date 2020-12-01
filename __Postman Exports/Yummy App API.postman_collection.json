@@ -1,0 +1,971 @@
+{
+	"info": {
+		"_postman_id": "d81c4593-6ece-4d4f-be5c-ea6975928c73",
+		"name": "Yummy App API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "User Profile",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/user/profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Logout",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/user/logout",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Logout All",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/user/logoutAll",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"logoutAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0a2208a5-5166-4670-bb3e-0e9d5d9109d8",
+								"exec": [
+									"if (pm.response.code === 200) {\r",
+									"    pm.environment.set('authToken', pm.response.json().data.token);\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"first_name\": \"jane\",\r\n    \"last_name\": \"Doe\",\r\n    \"phone\": \"715823595\",\r\n    \"email\": \"titus@does.com\",\r\n    \"city_id\": 1,\r\n    \"role_id\": \"courier\",\r\n    \"password\": \"password\",\r\n    \"password_confirmation\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/new",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"new"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a55f0097-81ea-45b5-bf67-09728b37174c",
+								"exec": [
+									"if (pm.response.code === 200) {\r",
+									"    pm.environment.set('authToken', pm.response.json().data.token);\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"phone\": \"715823591\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/user/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						},
+						"description": "# User Login \r\n*Check path in Postman*\r\nThis is a *POST* request helps you login to the API to get **Authentication Token**.\r\nYou have to submit a form with the following keys:-\r\n- **email*** - A valid Email Address of the User\r\n- **password*** - The user's password\r\n\r\nReturns JSON containing:-\r\n- **User data** and **Auth Token**"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Customer App",
+			"item": [
+				{
+					"name": "Customer Home",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/customer/home",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"customer",
+								"home"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer Service Order",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/customer/service/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"customer",
+								"service",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer New Order",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"id\": 1,\r\n        \"qty\": 2\r\n    },\r\n    {\r\n        \"id\": 2,\r\n        \"qty\": 1\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/customer/orders/new/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"customer",
+								"orders",
+								"new",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer Orders",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/customer/orders",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"customer",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer Order Shipping",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/customer/order/shipping/12",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"customer",
+								"order",
+								"shipping",
+								"12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer Order Info",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/customer/orders/12",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"customer",
+								"orders",
+								"12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer Set Order Shipping",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"address\": 1,\r\n    \"fee\": 25.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/customer/order/shipping/12",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"customer",
+								"order",
+								"shipping",
+								"12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer Set Order Status",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/customer/order/status/12",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"customer",
+								"order",
+								"status",
+								"12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer Add Address",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Work Adddress\",\r\n    \"desc\": \"Next to Govt hse\",\r\n    \"coords\": \"-33.2352,342.252\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/customer/addresses/new",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"customer",
+								"addresses",
+								"new"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer Addresses",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/customer/addresses",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"customer",
+								"addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer Address Info",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/customer/addresses/4",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"customer",
+								"addresses",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer Delete Address",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/customer/addresses/3/delete",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"customer",
+								"addresses",
+								"3",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer Payment Methods",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/customer/payment/methods",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"customer",
+								"payment",
+								"methods"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer Set Cash Payment Method",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"method\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/customer/order/12/payment/methods",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"customer",
+								"order",
+								"12",
+								"payment",
+								"methods"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Chef App",
+			"item": [
+				{
+					"name": "Chef Home",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/chef/home",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"chef",
+								"home"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Chef Orders",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/chef/orders",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"chef",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Chef Order Info",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/chef/orders/11",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"chef",
+								"orders",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Chef Couriers",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/chef/couriers",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"chef",
+								"couriers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Chef Set Order Courier",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/chef/order/courier/12",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"chef",
+								"order",
+								"courier",
+								"12"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Delivery Courior App",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Universal",
+			"item": [
+				{
+					"name": "Reviews",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/reviews",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Review",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"review\": \"A new Review Rolem Ipsum\",\r\n    \"rating\": 5,\r\n    \"order\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/reviews/new",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"reviews",
+								"new"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{authToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "4e2c7c16-a04f-4b31-a6ef-e0069441d719",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "d5ea8085-065c-40a6-aad5-a8c83d47042c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
