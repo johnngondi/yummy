@@ -15,11 +15,16 @@ class OrderController extends Controller
     {
         $user = auth()->user();
         $chefInfo = Chef::where('user_id', $user->id)->first();
+        $allOrdersData = Order::where('status', '<>', 0)->where('status', '<>', 5)->latest()->paginate(10);
+        $allOrders = $allOrdersData->items();
 
-        $orders = OrderHelper::formatOrders($chefInfo->orders, 'chef');
+//        return $allOrdersData->nextPageUrl();
+
+        $orders = OrderHelper::formatOrders($allOrders, 'chef', 'mini');
 
         return new DataResource([
-            'orders' => $orders
+            'orders' => $orders,
+            'next' => $allOrdersData->nextPageUrl()
         ]);
     }
 
@@ -27,6 +32,21 @@ class OrderController extends Controller
     {
         return new DataResource([
             'order' => OrderHelper::formatOrders([$order], 'chef')
+        ]);
+    }
+
+    public function dispatchOrder(Order $order, Request $request)
+    {
+        $order->update([
+            'courier_id' => $request->courier,
+            'status' => Order::$DISPATCHED
+        ]);
+
+        // Dispatch event to say order was dispatched and to who
+
+        return response([
+            'status' => 1,
+            'message' => 'Order Dispatched'
         ]);
     }
 }

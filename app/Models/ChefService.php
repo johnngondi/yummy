@@ -9,6 +9,8 @@ class ChefService extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function chef()
     {
         return $this->belongsTo(Chef::class);

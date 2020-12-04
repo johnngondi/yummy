@@ -74,4 +74,17 @@ class User extends Authenticatable
         return $this->belongsTo(City::class);
     }
 
+    public function transactions()
+    {
+        return $this->hasMany(UserAccount::class)->latest();
+    }
+
+    public function accountBalance()
+    {
+        $credit = $this->transactions->where('type', 'c')->where('status', 1)->pluck('amount')->sum();
+        $debit = $this->transactions->where('type', 'd')->where('status', 1)->pluck('amount')->sum();
+
+        return $credit - $debit;
+    }
+
 }

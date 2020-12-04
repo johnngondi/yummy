@@ -30,6 +30,7 @@ class AddressController extends Controller
 
         return new DataResource([
             'address' => $address->makeHidden(['user_id', 'updated_at']),
+            'status' => 1,
             'message' => 'Address Added Successfully'
         ]);
 
@@ -56,10 +57,12 @@ class AddressController extends Controller
             $userAddress->delete();
 
             return response([
+                'status' => 1,
                 'message' => 'Address Deleted'
             ]);
         } else {
             return response([
+                'status' => 0,
                 'message' => 'Unauthorized'
             ], 401);
         }

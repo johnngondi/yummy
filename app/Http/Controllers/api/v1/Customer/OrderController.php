@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\api\v1\DataResource;
 use App\Models\ChefServiceOption;
 use App\Models\Order;
+use App\Models\Payment;
 use App\Models\UserAddress;
+use http\Env\Response;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -66,6 +68,7 @@ class OrderController extends Controller
             'order' => [
                 'id' => $order->id
             ],
+            'status' => 1,
             'message' => 'Order Created Successfully!'
         ]);
     }
@@ -107,6 +110,7 @@ class OrderController extends Controller
             'order' => [
                 'id' => $order->id
             ],
+            'status' => 1,
             'message' => 'Shipping info updated Successfully!'
         ]);
     }
@@ -114,6 +118,19 @@ class OrderController extends Controller
     public function changeStatus(Order $order, Request $request)
     {
         $statusData = json_decode($request->getContent());
+
+        if ($statusData->status === Order::$CLEARED) {
+            //check if is paid
+            $orderPayment = Payment::where('order_id', $order->id)->first();
+
+            if (is_null($orderPayment) || $orderPayment->status === 0){
+                return response([
+                    'status' => 0,
+                    'message' => 'Order Not Paid'
+                ]);
+            }
+        }
+
         $order->changeStatus($statusData->status);
 
         return new DataResource([
@@ -121,6 +138,7 @@ class OrderController extends Controller
                 'id' => $order->id,
                 'status' => $order->status
             ],
+            'status' => 1,
             'message' => 'Status updated Successfully!'
         ]);
     }

@@ -9,6 +9,7 @@ use App\Models\User;
 class Chef extends Model
 {
     use HasFactory;
+    protected $guarded = [];
 
     public function info()
     {
@@ -18,5 +19,10 @@ class Chef extends Model
     public function orders()
     {
         return $this->hasMany(Order::class)->latest();
+    }
+
+    public function services()
+    {
+       return $this->hasMany(ChefService::class, 'chef_id');
     }
 }

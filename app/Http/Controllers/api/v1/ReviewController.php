@@ -39,11 +39,13 @@ class ReviewController extends Controller
             ]);
 
             return new DataResource([
+                'status' => 1,
                 'message' => "Review Added successfully"
             ]);
 
         } catch (AuthorizationException $e) {
             return response([
+                'status' => 0,
                 'message' => $e->getMessage()
             ], 401);
         }

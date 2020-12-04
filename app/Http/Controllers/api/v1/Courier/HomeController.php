@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\api\v1\Chef;
+namespace App\Http\Controllers\api\v1\Courier;
 
+use App\Http\Controllers\api\v1\Chef\ServiceController;
 use App\Http\Controllers\api\v1\Helpers\OrderHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\api\v1\DataResource;
-use App\Models\Chef;
+use App\Models\Courier;
 use App\Models\Order;
 use App\Models\UserAccount;
 use Illuminate\Http\Request;
@@ -24,18 +25,18 @@ class HomeController extends Controller
 
         $unPaidAmount = $user->accountBalance();
 
-        $chefInfo = Chef::where('user_id', $user->id)->first();
-        $orders = Order::where('chef_id', $chefInfo->id)->where('status', 1)->orWhere('status', 2)->get();
+        $courierInfo = Courier::where('user_id', $user->id)->first();
+        $orders = Order::where('courier_id', $courierInfo->id)->where('status', 3)->get();
 
-        $todayOrders = Order::where('chef_id', $chefInfo->id)
+        $todayOrders = Order::where('courier_id', $courierInfo->id)
             ->where('status','>', 0)->where('status', '<>', 5)
             ->whereDate('created_at', Carbon::today())
             ->get()->count();
 
 
         return new DataResource([
-            'name' => $chefInfo->hotel,
-            'status' => $chefInfo->status,
+            'name' => $courierInfo->hotel,
+            'status' => $courierInfo->status,
             'city' => $user->city->name,
             'todayIncome' => $todayIncome,
             'todayOrders' => $todayOrders,
@@ -46,20 +47,15 @@ class HomeController extends Controller
 
     public function update(Request $request)
     {
-        $chefInfo = Chef::where('user_id', auth()->user()->id)->first();
+        $courierInfo = Courier::where('user_id', auth()->user()->id)->first();
 
-        $serviceController = new ServiceController();
-        $chefInfo->services->map(function ($service) use ($serviceController, $request) {
-            $serviceController->update($request, $service);
-        });
-
-        $chefInfo->update([
+        $courierInfo->update([
             'status' => $request->status
         ]);
 
         return response([
             'status' => 1,
-            'message' => 'Status and all services & options status updated'
+            'message' => 'Status updated'
         ]);
     }
 }

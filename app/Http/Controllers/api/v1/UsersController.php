@@ -26,6 +26,7 @@ class UsersController extends Controller
         return new DataResource([
             'user' => $res->makeHidden(['email_verified_at', 'email', 'created_at', 'updated_at', 'current_team_id', 'profile_photo_path']),
             'token' => $this->generateToken($request, $res),
+            'status' => 1,
             'message' => 'Registration successful. Enjoy!'
         ]);
 
@@ -37,6 +38,7 @@ class UsersController extends Controller
 
         if (!Hash::check($request->password, $user->password)) {
            return response([
+               'status' => 0,
                'message' => 'Invalid Credentials'
            ], 400);
         }
@@ -44,6 +46,7 @@ class UsersController extends Controller
         return new DataResource([
             'user' => $user->makeHidden(['email_verified_at', 'email', 'created_at', 'updated_at', 'current_team_id', 'profile_photo_path']),
             'token' => $this->generateToken($request, $user),
+            'status' => 1,
             'message' => 'Login successful. Enjoy!'
         ]);
     }
@@ -58,6 +61,7 @@ class UsersController extends Controller
         auth()->user()->currentAccessToken()->delete();
 
         return response([
+            'status' => 1,
             'message' => 'Logout Successful. See you soon!'
         ]);
     }
@@ -67,6 +71,7 @@ class UsersController extends Controller
         auth()->user()->tokens()->delete();
 
         return response([
+            'status' => 1,
             'message' => 'Logout from all devices Successful. See you soon!'
         ]);
     }

@@ -54,12 +54,34 @@ Route::prefix('customer')->middleware('auth:sanctum')->group(function (){
 Route::prefix('chef')->middleware('auth:sanctum')->group(function (){
 
     Route::get('/home', [\App\Http\Controllers\api\v1\Chef\HomeController::class, 'index']);
-//    Route::get('/service/{service}', [\App\Http\Controllers\api\v1\Chef\ServiceController::class, 'show']);
+    Route::put('/status', [\App\Http\Controllers\api\v1\Chef\HomeController::class, 'update']);
 
     Route::get('/orders', [\App\Http\Controllers\api\v1\Chef\OrderController::class, 'index']);
     Route::get('/orders/{order}', [\App\Http\Controllers\api\v1\Chef\OrderController::class, 'show']);
+    Route::post('/order/{order}/dispatch', [\App\Http\Controllers\api\v1\Chef\OrderController::class, 'dispatchOrder']);
 
     Route::get('/couriers', [\App\Http\Controllers\api\v1\Chef\CourierController::class, 'index']);
+
+    Route::get('/services', [\App\Http\Controllers\api\v1\Chef\ServiceController::class, 'index']);
+    Route::get('/services/{service}/options', [\App\Http\Controllers\api\v1\Chef\ServiceController::class, 'show']);
+    Route::post('/services/{service}', [\App\Http\Controllers\api\v1\Chef\ServiceController::class, 'update']);
+
+    Route::post('/services/{service}/options', [\App\Http\Controllers\api\v1\Chef\ServiceOptionController::class, 'store']);
+    Route::get('/service/options/{option}', [\App\Http\Controllers\api\v1\Chef\ServiceOptionController::class, 'show']);
+    Route::put('/service/options/{option}', [\App\Http\Controllers\api\v1\Chef\ServiceOptionController::class, 'update']);
+    Route::post('/service/options/{option}', [\App\Http\Controllers\api\v1\Chef\ServiceOptionController::class, 'changeStatus']);
+    Route::delete('/service/options/{option}', [\App\Http\Controllers\api\v1\Chef\ServiceOptionController::class, 'destroy']);
+
+    Route::get('/statement', [\App\Http\Controllers\api\v1\Chef\StatementController::class, 'index']);
+
+});
+
+Route::prefix('courier')->middleware('auth:sanctum')->group(function (){
+
+    Route::get('/home', [\App\Http\Controllers\api\v1\Courier\HomeController::class, 'index']);
+    Route::put('/status', [\App\Http\Controllers\api\v1\Courier\HomeController::class, 'update']);
+
+    Route::get('/statement', [\App\Http\Controllers\api\v1\Courier\StatementController::class, 'index']);
 
 });
 

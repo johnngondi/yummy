@@ -9,6 +9,7 @@ use App\Models\User;
 class Courier extends Model
 {
     use HasFactory;
+    protected $guarded = [];
 
     public function info()
     {

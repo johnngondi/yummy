@@ -21,13 +21,15 @@ class PaymentMethodsController extends Controller
     {
 
         $order->update([
-            'payment_mode_id' => json_decode($request->getContent())->method
+            'payment_mode_id' => json_decode($request->getContent())->method,
+            'status' => Order::$PAY_ON_DELIVERY
         ]);
 
         return new DataResource([
             'order' => [
                 'id' => $order->id
             ],
+            'status' => 1,
             'message' => 'Payment Method Set.'
         ]);
     }

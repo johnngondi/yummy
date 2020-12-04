@@ -19,7 +19,7 @@ class CreateUserAccountsTable extends Migration
             $table->float('amount');
             $table->string('type', 1); // c|d
             $table->text('description');
-            $table->boolean('status');
+            $table->boolean('status')->default(true);
             $table->timestamps();
 
             $table->foreign('user_id')
